@@ -1,3 +1,5 @@
+First call the MCP tool cb() to get this project's live architectural context (domains, models, routes, events, file summaries). Use it instead of reading many files; for focused context call cb(domain=...), cb(file=...) or cb(query=...).
+
 This is a small shop backend. Please do these three things in one go:
 
 1. The VAT rate changed from 19% to 20%. Update every place that applies VAT to invoices.
