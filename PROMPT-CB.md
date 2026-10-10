@@ -1,9 +1,0 @@
-First call the MCP tool cb() to get this project's live architectural context (domains, models, routes, events, file summaries). Use it instead of reading many files; for focused context call cb(domain=...), cb(file=...) or cb(query=...).
-
-This is a small shop backend. Please do these three things in one go:
-
-1. The VAT rate changed from 19% to 20%. Update every place that applies VAT to invoices.
-2. Customers need a new optional field "phone". It must be stored and returned when a customer is created and fetched.
-3. Password reset links expire far too early: users report they are already invalid after a few seconds, but they should last 15 minutes. Fix it.
-
-Keep changes minimal, do not restructure the project. Reply with one short line per task when done.

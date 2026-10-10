@@ -1,0 +1,7 @@
+[project]
+name = "northstar-commerce"
+version = "2.8.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

@@ -1,2 +1,6 @@
 __pycache__/
 *.pyc
+.pytest_cache/
+results/runs.json
+results/runs.tmp
+results/VERDICT.md

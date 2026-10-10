@@ -1,0 +1,8 @@
+You are working in the Northstar Commerce SaaS repository. Implement all four production changes below.
+
+1. For this fictional benchmark scenario, change the configured standard VAT rate from 19% to 20%. This is a test requirement, not a statement about current tax law. Update every active invoice, credit-note and finance-export path that applies the standard VAT rate. Historical migrations and documentation must remain unchanged.
+2. Customers need a new optional `phone` field. It must survive persistence, appear in create/get API responses, and be included in the `customers.customer.created` event payload. Existing callers that omit it must continue to work and receive `phone: null`.
+3. Password-reset links must remain valid for 15 minutes. They currently expire after only a few seconds because the configured unit and the timestamp comparison disagree. Correct the runtime behavior.
+4. The payment provider retries webhook deliveries. Make `payment.succeeded` processing idempotent by event id so a retry creates neither a second ledger entry nor a second domain event. Use the repository's existing idempotency boundary rather than inventing a parallel store.
+
+Keep the changes minimal and inside the project. Do not modify benchmark tooling outside this working directory. Run relevant checks if available, then finish with a concise summary.
