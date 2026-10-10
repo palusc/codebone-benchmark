@@ -116,6 +116,17 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(usage["fresh_tokens"], 30)
         self.assertEqual(usage["total_tokens"], 110)
 
+    def test_report_does_not_claim_unfinished_repetitions_are_complete(self):
+        rows = [{"run_id": "test", "mode": mode, "tasks_ok": 4, "exit_code": 0,
+                 "fresh_tokens": 1000, "wall_s": 50} for mode in ("plain", "codebone")]
+        with tempfile.TemporaryDirectory() as temp:
+            report = Path(temp) / "VERDICT.md"
+            with patch.object(benchmark, "RESULTS_DIR", Path(temp)), \
+                 patch.object(benchmark, "VERDICT_FILE", report):
+                benchmark.write_verdict(rows, "test", "codex", None, 3)
+            self.assertIn("## INCONCLUSIVE", report.read_text())
+            self.assertIn("recorded 1 plain and 1 codebone", report.read_text())
+
     def test_claude_api_error_is_a_failed_process(self):
         process = subprocess.CompletedProcess([], 0, json.dumps({"is_error": True, "result": "Auth failed"}), "")
         with patch.object(benchmark, "run", return_value=process):

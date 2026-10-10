@@ -341,6 +341,9 @@ def write_verdict(rows: list[dict[str, Any]], run_id: str, agent: str, model: st
     plain = [row for row in current if row["mode"] == "plain"]
     codebone = [row for row in current if row["mode"] == "codebone"]
     verdict, reason, metrics = verdict_for(plain, codebone)
+    if len(plain) != runs or len(codebone) != runs:
+        verdict = "INCONCLUSIVE"
+        reason = f"Requested {runs} paired trial(s); recorded {len(plain)} plain and {len(codebone)} codebone run(s)."
     task_names = ["vat_policy", "customer_phone", "reset_token_ttl", "webhook_idempotency"]
     lines = [
         "# codebone benchmark verdict",
@@ -349,7 +352,7 @@ def write_verdict(rows: list[dict[str, Any]], run_id: str, agent: str, model: st
         "",
         reason,
         "",
-        f"Run `{run_id}` · {agent} · {model or 'default model'} · {runs} paired trial(s)",
+        f"Run `{run_id}` · {agent} · {model or 'default model'} · {runs} paired trial(s) requested",
         "",
         "| Metric | Plain | With codebone | Difference |",
         "|---|---:|---:|---:|",
